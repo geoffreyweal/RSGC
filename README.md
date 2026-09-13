@@ -17,7 +17,7 @@ This program was originally designed to remove saturated straight-chain aliphati
 
 ## Installation
 
-It is recommended to read the installation page before using the RSGC program. See [Installation: Setting Up RSGC and Pre-Requisites Packages](https://geoffreyweal.github.io/RSGC/Installation) for more information. Note that you can install RSGC through ``pip3`` and ``conda``. 
+It is recommended to read the installation page before using the RSGC program. See [Installation: Setting Up RSGC and Pre-Requisites Packages](https://geoffreyweal.github.io/RSGC/Installation) for more information. Note that RSGC is not published to PyPI or conda; install it from GitHub with ``pip3 install --upgrade --user git+https://github.com/geoffreyweal/RSGC.git``. 
 
 ## Guide To Using RSGC
 
@@ -27,7 +27,7 @@ The RSGC program is one in a series of programs that are designed to be used in 
 
 The RSGC program is used as part of a grand scheme for calculating the excited-state electronic properties of molecules in a crystal. This includes simulations of exciton and charge diffusion through crystal structures, in particular for organic molecules (but not limited to them). This scheme is shown below, along with where the RSGC program is used in this scheme. 
 
-<img alt="Schematic of Grand Scheme" src="Documentation/docs/Images/Grand_Scheme/Grand_Scheme.png" />
+<img alt="Schematic of Grand Scheme" src="Documentation/docs/Shared_Images/Grand_Scheme/Grand_Scheme.png" />
 
 ## Websites and Github Repositories for All Associated Programs
 

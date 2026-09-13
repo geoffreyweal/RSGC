@@ -59,7 +59,7 @@ In the fourth section, gather all the paths of the crystal files you want to rem
 
 In the fifth section, remove any existing files that were produced during previous RSGC runs. You can leave this as is, or modify it as you would like.  An example of the code for ``PART V`` is shown below:
 
-```python title="Part V of Run_RSGC.py: Remove existing files from previous RSGC runs" show_lines="78:96" linenums="78"
+```python title="Part V of Run_RSGC.py: Remove existing files from previous RSGC runs" show_lines="78:108" linenums="78"
 --8<-- "docs/Files/Run_RSGC.py"
 ```
 
@@ -67,7 +67,7 @@ In the fifth section, remove any existing files that were produced during previo
 
 In the sixth section, remove sidegroups from all your crystals of interest using the RSGC program. You can leave this as is, or modify it as you would like.  An example of the code for ``PART VI`` is shown below:
 
-```python title="Part VI of Run_RSGC.py: Run the RSGC program" show_lines="96:132" linenums="96"
+```python title="Part VI of Run_RSGC.py: Run the RSGC program" show_lines="109:143" linenums="109"
 --8<-- "docs/Files/Run_RSGC.py"
 ```
 

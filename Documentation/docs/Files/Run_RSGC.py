@@ -78,55 +78,67 @@ for crystal_database_filename in crystal_database_filenames:
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # PART V: Reset RSGC files from previous RSGC runs
 
-# Twelfth, reset the RSGC files.  
+# NOTE: Everything below is inside "if __name__ == '__main__':" on purpose.
+#       RSGC uses multiprocessing, and on macOS (and Windows) Python starts worker
+#       processes with the "spawn" method, which re-imports this script inside every
+#       worker. Without this guard each worker would re-run the file deletions below
+#       while the main run is still writing to those folders, and Python would stop the
+#       run with "An attempt has been made to start a new process before the current
+#       process has finished its bootstrapping phase". On Linux the default is "fork",
+#       so it works either way there - but keep the guard so this script runs anywhere.
+if __name__ == '__main__':
 
-# 12.1: Remove the folder that we will place crystals in that we will remove sidegroups from.
-crystal_database_with_removed_sidegroups_folder_name = f'{crystal_database_dirname}_with_removed_sidegroups'
-if os.path.exists(crystal_database_with_removed_sidegroups_folder_name):
-    shutil.rmtree(crystal_database_with_removed_sidegroups_folder_name)
+    # Twelfth, reset the RSGC files.  
 
-# 12.2: Remove the file indicating what issues were found when running the RSGC program. 
-if os.path.exists('RSGC_issues.txt'):
-    os.remove('RSGC_issues.txt')
+    # 12.1: Remove the folders that the RSGC program writes crystals into.
+    #       These names must match the "save_crystal_folderpath" default used by RSGC below.
+    save_crystal_folderpath = 'crystals_with_sidechains_removed'
+    for folder_name in (save_crystal_folderpath, save_crystal_folderpath+'_molecules'):
+        if os.path.exists(folder_name):
+            shutil.rmtree(folder_name)
 
-# 12.3: Remove the file containing which rings contain hydrogens in them when running the RSGC program. 
-if os.path.exists('Rings_with_hydrogens_in_them.txt'):
-    os.remove('Rings_with_hydrogens_in_them.txt')
+    # 12.2: Remove the file indicating what issues were found when running the RSGC program. 
+    if os.path.exists('RSGC_issues.txt'):
+        os.remove('RSGC_issues.txt')
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# PART VI: Run the RSGC program on the crystals you want to remove sidegroups from
+    # 12.3: Remove the file containing which rings contain hydrogens in them when running the RSGC program. 
+    if os.path.exists('Rings_with_hydrogens_in_them.txt'):
+        os.remove('Rings_with_hydrogens_in_them.txt')
 
-# Thirteenth, run the RSGC program on the crystals you want to remove sidegroups from
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # PART VI: Run the RSGC program on the crystals you want to remove sidegroups from
 
-# 13.1: Obtain the total number of crystal you want to process with the RSGC program. 
-total_no_of_crystals = str(len(filepath_names))
+    # Thirteenth, run the RSGC program on the crystals you want to remove sidegroups from
 
-# 13.2: Set a counter to record successful RSGC executions.
-successful = 0
+    # 13.1: Obtain the total number of crystal you want to process with the RSGC program. 
+    total_no_of_crystals = str(len(filepath_names))
 
-# 13.3: For each crystal in the filepath_names list. 
-for counter, filepath in enumerate(filepath_names, start=0):
+    # 13.2: Set a counter to record successful RSGC executions.
+    successful = 0
 
-    # 13.4: Print to screen how many crystals have been processed by the RSGC program. 
-    print('Running crystal: '+str(counter)+' out of '+total_no_of_crystals)
+    # 13.3: For each crystal in the filepath_names list. 
+    for counter, filepath in enumerate(filepath_names, start=0):
 
-    # 13.5: Run the RSGC program. 
-    try:
+        # 13.4: Print to screen how many crystals have been processed by the RSGC program. 
+        print('Running crystal: '+str(counter)+' out of '+total_no_of_crystals)
 
-        # 13.5.1: Run the RSGC program. 
-        RSGC(filepath, leave_as_ethyls=leave_as_ethyls, save_molecules_individually=save_molecules_individually)
+        # 13.5: Run the RSGC program. 
+        try:
 
-        # 13.5.2: Record the successful result. 
-        successful += 1
+            # 13.5.1: Run the RSGC program. 
+            RSGC(filepath, leave_as_ethyls=leave_as_ethyls, save_molecules_individually=save_molecules_individually)
 
-    except Hydrogen_in_Ring_Exception as exception_message:
+            # 13.5.2: Record the successful result. 
+            successful += 1
 
-        # 13.5.3: If there was an issue with the RSGC program, write the issue in the 'RSGC_issues.txt' file
-        with open('RSGC_issues.txt','a+') as issuesTXT:
-            issuesTXT.write(filepath+': '+str(exception_message)+'\n')
+        except Hydrogen_in_Ring_Exception as exception_message:
 
-# 13.6: Report the number of successful executions.
-print('========================')
-print('Number of successfuls: '+str(successful))
+            # 13.5.3: If there was an issue with the RSGC program, write the issue in the 'RSGC_issues.txt' file
+            with open('RSGC_issues.txt','a+') as issuesTXT:
+                issuesTXT.write(filepath+': '+str(exception_message)+'\n')
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # 13.6: Report the number of successful executions.
+    print('========================')
+    print('Number of successfuls: '+str(successful))
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
