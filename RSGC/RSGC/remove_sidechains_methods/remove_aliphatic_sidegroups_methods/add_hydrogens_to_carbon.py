@@ -29,7 +29,6 @@ def add_hydrogens_to_carbon(molecule, molecule_graph, carbon_index):
 		print('The number of atoms neighbouring carbon (index: '+str(carbon_index)+') is '+str(no_of_neighbouring_atoms))
 		print('This should be between 1 and 4')
 		print('Check this out')
-		import pdb; pdb.set_trace()
 		exit('This program with finish without completing')
 
 	# Second, hydrogen will be added to the end of the molecule, so any future additions of hydrogens 
@@ -100,10 +99,7 @@ def add_hydrogen_to_carbon_with_1_neighbour(molecule, molecule_graph, carbon_ind
 		print('Neighbouring Carbon index: '+str(n_atom_index))
 		print("Neighbouring Carbon's neighbours indices: '+str(molecule_graph[n_atom_index])")
 		print('The molecule will now appear in the ASE GUI')
-		from ase.visualize import view
-		view(molecule)
 		print('Check this out')
-		import pdb; pdb.set_trace()
 		exit('This program with finish without completing')
 
 	# Third, make the carbon to add a hydrogen to the origin.

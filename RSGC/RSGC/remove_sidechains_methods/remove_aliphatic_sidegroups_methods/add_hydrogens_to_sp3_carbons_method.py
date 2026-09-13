@@ -29,7 +29,6 @@ def add_hydrogens_to_sp3_carbons_method(molecule, molecule_graph):
 
 	# First, obtain all the indices of the aliphatic carbons in the molecule (that are sp3). 
 	aliphatic_carbon_indices = get_sp3_carbons(molecule, molecule_graph)
-	import pdb; pdb.set_trace()
 
 	# Second, make a copy of the molecule and it's associated graph.
 	molecule_copy = molecule.copy()
