@@ -62,7 +62,7 @@ def RSGC(filepath, save_crystal_folderpath='crystals_with_sidechains_removed', m
 	crystal.set_pbc(True)
 
 	# Second, get the graph of the crystal.
-	crystal, crystal_graph = obtain_graph(crystal,name='crystal')
+	crystal_graph = obtain_graph(crystal,name='crystal')
 
 	# Third, get the molecules and the graphs associated with each molecule in the crystal.
 	molecules, molecule_graphs, SolventsList, symmetry_operations, cell = process_crystal(crystal,crystal_graph=crystal_graph,take_shortest_distance=True,return_list=False,logger=None)
